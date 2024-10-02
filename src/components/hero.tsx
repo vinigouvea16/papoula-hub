@@ -51,7 +51,7 @@ export default function Hero() {
         className="lg:flex-row flex flex-col 2xl:gap-28 lg:gap-16 lg:pt-52 pt-28"
         id="card-section"
       >
-        <div className="border-t-2 border-b-2 border-papoula-text py-11 2xl:w-[45%] mb-28">
+        <div className="border-t-2 border-b-2 border-papoula-text py-11 2xl:w-[47%] mb-28">
           <p className="lg:text-3xl text-xl tracking-wider text-center lg:text-start italic ">
             “A Papoula é uma marca com um pouco de mistério, quem não é do
             audiovisual pode não entender suas atividades laborais, mas quer
