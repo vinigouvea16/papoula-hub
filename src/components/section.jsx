@@ -16,7 +16,7 @@ export default function Section() {
       className="relative flex items-center justify-center h-lvh overflow-hidden"
       style={{ clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}
     >
-      <div className="relative z-10 md:p-20 px-2 py-20 mix-blend-hard-light items-center text-[#D7DADB] w-full h-lvh flex flex-col justify-between">
+      <div className="relative z-10 md:p-20 px-2 py-20 mix-blend-hard-light items-center text-[#D7DADB] w-full h-lvh flex flex-col justify-around gap-10">
         <p className="md:w-[50vw] md:text-[2.5vw] text-xl flex justify-center mix-blend-difference font-semibold ">
           Aumentando seu estado de consciência
         </p>
@@ -70,7 +70,7 @@ export default function Section() {
             </svg>
             <p>ULA</p>
           </div>
-          <div className="md:text-[3vw]  text-2xl justify-between uppercase flex items-center">
+          <div className="md:text-[3vw] mt-8 text-2xl justify-between uppercase flex items-center">
             <span>the</span>
             <span>storytelling</span>
             <span>hub</span>

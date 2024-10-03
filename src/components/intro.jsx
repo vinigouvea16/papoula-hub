@@ -23,7 +23,7 @@ export default function Intro() {
         />
         <a
           href="#cta"
-          className="text-5xl text-white absolute bottom-[10%] right-[2%] transform transition-transform duration-300 ease-in-out hover:scale-125 hover:rotate-180"
+          className="text-5xl text-white absolute bottom-[10%] right-[2%] transform transition-transform duration-500 ease-out hover:scale-125 hover:-rotate-180"
         >
           <svg
             width="80"

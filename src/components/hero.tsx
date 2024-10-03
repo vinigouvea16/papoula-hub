@@ -30,7 +30,7 @@ export default function Hero() {
       >
         <div className="lg:text-start text-center xl:w-1/2">
           <h2 className="text-5xl font-bold pb-5">Posicionamento</h2>
-          <p className="lg:text-2xl">
+          <p className="lg:text-2xl tracking-widest">
             A Papoula nasce da necessidade de criar pontes entre as mentes
             solitárias que se perdem em seu isolamento. Existimos para ocupar os
             espaços que permeiam os meios do caminho, e acreditamos no poder do
@@ -39,7 +39,7 @@ export default function Hero() {
         </div>
         <div className="lg:text-start text-center xl:w-1/2">
           <h3 className="text-5xl font-bold pb-5">Missão</h3>
-          <p className="lg:text-2xl ">
+          <p className="lg:text-2xl tracking-widest ">
             <span className="italic lg:text-3xl text-xl">tapar buraco</span> -
             Ser uma plataforma de conexões e de criação de propriedade
             intelectual, um conjunto de ferramentas que quer deixar a vida mais

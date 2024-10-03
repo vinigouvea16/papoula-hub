@@ -25,6 +25,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { VideoIcon } from 'lucide-react'
+import Link from 'next/link'
 
 const formSchema = z.object({
   Email: z.string().email({ message: 'Email inválido' }),
@@ -284,7 +285,7 @@ export default function TwoColumnApplicationFormComponent() {
   return (
     <>
       <Toaster />
-      <div className="container mx-auto px-4 py-8 ">
+      <div className="mx-auto px-4 py-8 ">
         <h1 className="text-4xl font-bold text-center mb-8">
           Núcleo Criativo para Desenvolvimento de Propriedade Intelectual
         </h1>
@@ -787,7 +788,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <h3 className="text-xl font-semibold">INTERESSE EM ODS</h3>
 
                   <AccessibleFormField
-                    label="ODS Identificação"
+                    label="Com qual/quais ODS você mais se identifica?"
                     id="ODS Identificação"
                     videoSrc="/path-to-ods-identificacao-video.mp4"
                   >
@@ -832,7 +833,7 @@ export default function TwoColumnApplicationFormComponent() {
                   </AccessibleFormField>
 
                   <AccessibleFormField
-                    label="ODS Projetos"
+                    label="Com qual/quais ODS seus projetos mais se encaixam?"
                     id="ODS Projetos"
                     videoSrc="/path-to-ods-projetos-video.mp4"
                   >
@@ -956,10 +957,26 @@ export default function TwoColumnApplicationFormComponent() {
             </form>
           </div>
           <div className="lg:w-[48%] lg:fixed lg:top-[90px] lg:left-4 lg:bottom-4 overflow-y-auto p-6 text-center">
-            <h2 className="text-4xl pb-4">
-              Projeto -{' '}
-              <span className="font-semibold">Histórias em pesquisa</span>
-            </h2>
+            <div className="flex items-center pb-4">
+              <div className="absolute">
+                <Link href="/" className="">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="46"
+                    height="46"
+                    fill="#000000"
+                    className="lg:w-[3vw] lg:h-[3vw] transform transition-transform duration-300 ease-in-out hover:scale-110 hover:fill-papoula-blue "
+                    viewBox="0 0 256 256"
+                  >
+                    <path d="M128,28A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.1,92.1,0,0,1,128,220ZM146.83,90.83,109.66,128l37.17,37.17a4,4,0,0,1-5.66,5.66l-40-40a4,4,0,0,1,0-5.66l40-40a4,4,0,1,1,5.66,5.66Z"></path>
+                  </svg>
+                </Link>
+              </div>
+              <h2 className="md:text-4xl text-4xl m-auto flex flex-col lg:flex-row">
+                Projeto -{' '}
+                <span className="font-semibold">Histórias em pesquisa</span>
+              </h2>
+            </div>
             <div className="space-y-4">
               <p>
                 &ldquo;História em Pesquisa&ldquo; é a primeira edição do Núcleo
@@ -1028,7 +1045,7 @@ export default function TwoColumnApplicationFormComponent() {
                 Dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
                 <a
                   href="mailto:contato@papoulahub.com"
-                  className="font-bold underline text-sky-500"
+                  className="font-bold underline text-sky-500 tracking-wide"
                 >
                   contato@papoulahub.com
                 </a>

@@ -34,9 +34,9 @@ export default function Index() {
       {dimension.width > 0 && (
         <>
           <motion.svg
-            className="lg:w-[369px] lg:h-[364px] w-[200px] h-[200px]" // Set the SVG width and adjust height automatically
-            animate={{ rotate: [0, 360] }} // Rotates the SVG 360 degrees
-            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }} // Infinite rotation
+            className="lg:w-[369px] lg:h-[364px] w-[200px] h-[200px]"
+            animate={{ rotate: [0, 360] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
             viewBox="0 0 369 364"
             xmlns="http://www.w3.org/2000/svg"
           >
