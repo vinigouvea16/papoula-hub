@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Checkbox } from '@/components/ui/checkbox'
+// import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { VideoIcon } from 'lucide-react'
+import { Loader2, VideoIcon } from 'lucide-react'
 // import Link from 'next/link'
 
 const formSchema = z.object({
@@ -31,19 +31,19 @@ const formSchema = z.object({
   'Projetos Pessoais': z
     .string()
     .min(1, { message: 'Este campo é obrigatório' }),
-  PortfolioLattes: z.string().url({ message: 'URL inválida' }).optional(),
+  'Portfolio/Currículo': z.string().url({ message: 'URL inválida' }).optional(),
   'Experiência Pesquisa': z
     .string()
     .min(1, { message: 'Este campo é obrigatório' }),
-  'ODS Identificação': z
-    .array(z.string())
-    .min(1, { message: 'Selecione pelo menos um ODS' }),
+  // 'ODS Identificação': z
+  //   .array(z.string())
+  //   .min(1, { message: 'Selecione pelo menos um ODS' }),
   'Identificação ODS Razão': z
     .string()
     .min(1, { message: 'Este campo é obrigatório' }),
-  'ODS Projetos': z
-    .array(z.string())
-    .min(1, { message: 'Selecione pelo menos um ODS' }),
+  // 'ODS Projetos': z
+  //   .array(z.string())
+  //   .min(1, { message: 'Selecione pelo menos um ODS' }),
   'Projetos ODS Relação': z
     .string()
     .min(1, { message: 'Este campo é obrigatório' }),
@@ -93,6 +93,10 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
 )
 
 export default function TwoColumnApplicationFormStep2() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [cooldownTime, setCooldownTime] = useState(0)
+
   const {
     control,
     handleSubmit,
@@ -104,16 +108,41 @@ export default function TwoColumnApplicationFormStep2() {
       'Experiência Roteiro': '',
       'Experiência Núcleos': '',
       'Projetos Pessoais': '',
-      PortfolioLattes: '',
+      'Portfolio/Currículo': '',
       'Experiência Pesquisa': '',
-      'ODS Identificação': [],
+      // 'ODS Identificação': [],
       'Identificação ODS Razão': '',
-      'ODS Projetos': [],
+      // 'ODS Projetos': [],
       'Projetos ODS Relação': '',
     },
   })
 
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (cooldownTime > 0) {
+      timer = setInterval(() => {
+        setCooldownTime((prevTime) => prevTime - 1)
+      }, 1000)
+    }
+    return () => clearInterval(timer)
+  }, [cooldownTime])
+
   const onSubmit = async (data: FormData) => {
+    if (isSubmitted || cooldownTime > 0) {
+      toast.error('Por favor, aguarde antes de enviar novamente.', {
+        duration: 5000,
+        style: {
+          background: '#FFA500',
+          color: '#FFFFFF',
+          border: 'none',
+        },
+        icon: '⏳',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+
     try {
       const response = await fetch('/api/submit-form-step2', {
         method: 'POST',
@@ -124,39 +153,77 @@ export default function TwoColumnApplicationFormStep2() {
       })
 
       if (response.ok) {
-        toast.success('Formulário enviado com sucesso!')
+        setIsSubmitted(true)
+        setCooldownTime(300) // 5 minutes cooldown
+        toast.success('Formulário enviado com sucesso!', {
+          style: {
+            background: '#4CAF50',
+            color: '#FFFFFF',
+            border: 'none',
+          },
+          icon: '🎉',
+        })
       } else {
-        toast.error('Erro ao enviar formulário. Por favor, tente novamente.')
+        toast.error('Erro ao enviar formulário. Por favor, tente novamente.', {
+          style: {
+            background: '#F44336',
+            color: '#FFFFFF',
+            border: 'none',
+          },
+          icon: '❌',
+        })
       }
     } catch (error) {
       console.error('Error submitting form:', error)
-      toast.error('Erro ao enviar formulário. Por favor, tente novamente.')
+      toast.error('Erro ao enviar formulário. Por favor, tente novamente.', {
+        style: {
+          background: '#F44336',
+          color: '#FFFFFF',
+          border: 'none',
+        },
+        icon: '❌',
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  const odsOptions = [
-    'Erradicação da Pobreza',
-    'Fome Zero e Agricultura Sustentável',
-    'Saúde e Bem-Estar',
-    'Educação de Qualidade',
-    'Igualdade de Gênero',
-    'Água Potável e Saneamento',
-    'Energia Limpa e Acessível',
-    'Trabalho Decente e Crescimento Econômico',
-    'Indústria, Inovação e Infraestrutura',
-    'Redução das Desigualdades',
-    'Cidades e Comunidades Sustentáveis',
-    'Consumo e Produção Responsáveis',
-    'Ação Contra a Mudança Global do Clima',
-    'Vida na Água',
-    'Vida Terrestre',
-    'Paz, Justiça e Instituições Eficazes',
-    'Parcerias e Meios de Implementação',
-  ]
+  // const odsOptions = [
+  //   'Erradicação da Pobreza',
+  //   'Fome Zero e Agricultura Sustentável',
+  //   'Saúde e Bem-Estar',
+  //   'Educação de Qualidade',
+  //   'Igualdade de Gênero',
+  //   'Água Potável e Saneamento',
+  //   'Energia Limpa e Acessível',
+  //   'Trabalho Decente e Crescimento Econômico',
+  //   'Indústria, Inovação e Infraestrutura',
+  //   'Redução das Desigualdades',
+  //   'Cidades e Comunidades Sustentáveis',
+  //   'Consumo e Produção Responsáveis',
+  //   'Ação Contra a Mudança Global do Clima',
+  //   'Vida na Água',
+  //   'Vida Terrestre',
+  //   'Paz, Justiça e Instituições Eficazes',
+  //   'Parcerias e Meios de Implementação',
+  // ]
 
   return (
     <>
-      <Toaster />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            border: '1px solid #555',
+            borderRadius: '8px',
+            padding: '16px',
+            fontSize: '16px',
+          },
+        }}
+      />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center mb-8">
           Núcleo Criativo para Desenvolvimento de Propriedade Intelectual
@@ -301,20 +368,6 @@ export default function TwoColumnApplicationFormStep2() {
                     />
                   </svg>
                 </div>
-                <div className="flex gap-4 items-center">
-                  {/* <Link href="/" className="">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="46"
-                      height="46"
-                      fill="#000000"
-                      className="lg:w-[3vw] lg:h-[3vw] transform transition-transform duration-300 ease-in-out hover:scale-110 hover:fill-papoula-blue "
-                      viewBox="0 0 256 256"
-                    >
-                      <path d="M128,28A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.1,92.1,0,0,1,128,220ZM146.83,90.83,109.66,128l37.17,37.17a4,4,0,0,1-5.66,5.66l-40-40a4,4,0,0,1,0-5.66l40-40a4,4,0,1,1,5.66,5.66Z"></path>
-                    </svg>
-                  </Link> */}
-                </div>
                 <h2 className="text-4xl font-semibold italic">ETAPA 2</h2>
 
                 <AccessibleFormField
@@ -410,11 +463,11 @@ export default function TwoColumnApplicationFormStep2() {
 
                   <AccessibleFormField
                     label="Portfólio/Currículo lattes (Opcional)"
-                    id="PortfolioLattes"
+                    id="Portfolio/Currículo"
                     videoSrc="/path-to-portfolio-lattes-video.mp4"
                   >
                     <Controller
-                      name="PortfolioLattes"
+                      name="Portfolio/Currículo"
                       control={control}
                       render={({ field }) => (
                         <Input
@@ -423,9 +476,9 @@ export default function TwoColumnApplicationFormStep2() {
                         />
                       )}
                     />
-                    {errors.PortfolioLattes && (
+                    {errors['Portfolio/Currículo'] && (
                       <p className="text-red-500">
-                        {errors.PortfolioLattes.message}
+                        {errors['Portfolio/Currículo'].message}
                       </p>
                     )}
                   </AccessibleFormField>
@@ -457,8 +510,8 @@ export default function TwoColumnApplicationFormStep2() {
                       </p>
                     )}
                   </AccessibleFormField>
-
-                  <AccessibleFormField
+                  {/* Checkbox lista ODS identificação */}
+                  {/* <AccessibleFormField
                     label="Com qual/quais ODS você mais se identifica?"
                     id="ODS Identificação"
                     videoSrc="/path-to-ods-identificacao-video.mp4"
@@ -501,10 +554,11 @@ export default function TwoColumnApplicationFormStep2() {
                         {errors['ODS Identificação'].message}
                       </p>
                     )}
-                  </AccessibleFormField>
+                  </AccessibleFormField> */}
 
+                  {/* Textarea ODS identificação */}
                   <AccessibleFormField
-                    label="Por que você se identifica com os ODS selecionados?"
+                    label="Por que você se identifica com os ODS selecionados na etapa anterior?"
                     id="Identificação ODS Razão"
                     videoSrc="/path-to-identificacao-ods-razao-video.mp4"
                   >
@@ -514,7 +568,7 @@ export default function TwoColumnApplicationFormStep2() {
                       render={({ field }) => (
                         <Textarea
                           {...field}
-                          placeholder="Explique por que você se identifica com os ODS selecionados"
+                          placeholder="Explique por que você se identifica com os ODS selecionados na etapa anterior"
                         />
                       )}
                     />
@@ -525,7 +579,8 @@ export default function TwoColumnApplicationFormStep2() {
                     )}
                   </AccessibleFormField>
 
-                  <AccessibleFormField
+                  {/* Checkbox lista ODS projeto */}
+                  {/* <AccessibleFormField
                     label="Com qual/quais ODS seus projetos mais se encaixam?"
                     id="ODS Projetos"
                     videoSrc="/path-to-ods-projetos-video.mp4"
@@ -568,10 +623,11 @@ export default function TwoColumnApplicationFormStep2() {
                         {errors['ODS Projetos'].message}
                       </p>
                     )}
-                  </AccessibleFormField>
+                  </AccessibleFormField> */}
 
+                  {/* Textarea ODS Projeto */}
                   <AccessibleFormField
-                    label="Descreva como seus projetos se relacionam com os ODS selecionados"
+                    label="Descreva como seus projetos se relacionam com os ODS selecionados na etapa anterior"
                     id="Projetos ODS Relação"
                     videoSrc="/path-to-projetos-ods-relacao-video.mp4"
                   >
@@ -581,7 +637,7 @@ export default function TwoColumnApplicationFormStep2() {
                       render={({ field }) => (
                         <Textarea
                           {...field}
-                          placeholder="Explique como seus projetos se relacionam com os ODS selecionados"
+                          placeholder="Explique como seus projetos se relacionam com os ODS selecionados na etapa anterior"
                         />
                       )}
                     />
@@ -593,7 +649,16 @@ export default function TwoColumnApplicationFormStep2() {
                   </AccessibleFormField>
                 </div>
 
-                <Button type="submit">Enviar Inscrição</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    'Enviar Inscrição'
+                  )}
+                </Button>
               </div>
             </form>
           </div>

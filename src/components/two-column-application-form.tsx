@@ -15,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
@@ -24,8 +23,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { VideoIcon } from 'lucide-react'
+import { Loader2, VideoIcon } from 'lucide-react'
 import Link from 'next/link'
+import { Textarea } from './ui/textarea'
+import { useEffect, useState } from 'react'
 
 const formSchema = z.object({
   Email: z.string().email({ message: 'Email inválido' }),
@@ -76,12 +77,18 @@ const formSchema = z.object({
     ],
     { required_error: 'Selecione uma região' },
   ),
-  'Formação Acadêmica': z
-    .string()
-    .min(1, { message: 'Formação acadêmica é obrigatória' }),
-  'Cursos e Certificados': z
-    .string()
-    .min(1, { message: 'Cursos e certificados são obrigatórios' }),
+  Formação: z.enum(
+    [
+      'Graduação em curso',
+      'Graduação completa',
+      'Pós Graduação em curso',
+      'Pós Graduação completa',
+      'Cursos Livres na área do audiovisual',
+      '+ 5 Anos de experiência com escrita ou audiovisual',
+      'Não tenho nenhuma formação, nem experiência na área',
+    ],
+    { required_error: 'Selecione uma opção de formação' },
+  ),
   'Nível de Experiência': z.enum([
     'Iniciante',
     'Não Iniciante',
@@ -117,7 +124,9 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
 }) => (
   <div className="space-y-2">
     <div className="flex items-center space-x-2">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} className="text-base">
+        {label}
+      </Label>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="default" size="icon">
@@ -142,6 +151,10 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
 )
 
 export default function TwoColumnApplicationFormComponent() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [cooldownTime, setCooldownTime] = useState(0)
+
   const {
     control,
     handleSubmit,
@@ -161,8 +174,7 @@ export default function TwoColumnApplicationFormComponent() {
       PCD: undefined,
       'Recursos A11y': '',
       Região: undefined,
-      'Formação Acadêmica': '',
-      'Cursos e Certificados': '',
+      Formação: undefined,
       'Nível de Experiência': undefined,
       'ODS Identificação': [],
       'ODS Projetos': [],
@@ -173,6 +185,16 @@ export default function TwoColumnApplicationFormComponent() {
 
   const racaEtnia = watch('Raça/Etnia')
   const generoOrientacao = watch('Gênero e Orientação Sexual')
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout
+    if (cooldownTime > 0) {
+      timer = setInterval(() => {
+        setCooldownTime((prevTime) => prevTime - 1)
+      }, 1000)
+    }
+    return () => clearInterval(timer)
+  }, [cooldownTime])
 
   type GenderType =
     | 'homem_cis_hetero'
@@ -232,6 +254,20 @@ export default function TwoColumnApplicationFormComponent() {
   }
 
   const onSubmit = async (data: FormData & { Região: Region }) => {
+    if (isSubmitted || cooldownTime > 0) {
+      toast.error('Por favor, aguarde antes de enviar novamente.', {
+        duration: 5000,
+        style: {
+          background: '#FFA500',
+          color: '#FFFFFF',
+          border: 'none',
+        },
+        icon: '⏳',
+      })
+      return
+    }
+
+    setIsSubmitting(true)
     const mappedData = {
       ...data,
       'Gênero e Orientação Sexual': mapGenderToAirtable(
@@ -250,15 +286,40 @@ export default function TwoColumnApplicationFormComponent() {
       })
 
       if (response.ok) {
-        toast.success('Formulário enviado com sucesso!')
+        setIsSubmitted(true)
+        setCooldownTime(300) // 5 minutes cooldown
+        toast.success('Formulário enviado com sucesso!', {
+          style: {
+            background: '#4CAF50',
+            color: '#FFFFFF',
+            border: 'none',
+          },
+          icon: '🎉',
+        })
       } else {
         const errorData = await response.json()
         console.error('Erro do servidor:', errorData)
-        toast.error('Erro ao enviar formulário. Por favor, tente novamente.')
+        toast.error('Erro ao enviar formulário. Por favor, tente novamente.', {
+          style: {
+            background: '#F44336',
+            color: '#FFFFFF',
+            border: 'none',
+          },
+          icon: '❌',
+        })
       }
     } catch (error) {
       console.error('Error submitting form:', error)
-      toast.error('Erro ao enviar formulário. Por favor, tente novamente.')
+      toast.error('Erro ao enviar formulário. Por favor, tente novamente.', {
+        style: {
+          background: '#F44336',
+          color: '#FFFFFF',
+          border: 'none',
+        },
+        icon: '❌',
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -284,16 +345,138 @@ export default function TwoColumnApplicationFormComponent() {
 
   return (
     <>
-      <Toaster />
-      <div className="mx-auto px-4 py-8 ">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#333',
+            color: '#fff',
+            border: '1px solid #555',
+            borderRadius: '8px',
+            padding: '16px',
+            fontSize: '16px',
+          },
+        }}
+      />
+      <div className="mx-auto px-4 py-8 md:w-[80%]">
         <h1 className="text-4xl font-bold text-center mb-8">
           Núcleo Criativo para Desenvolvimento de Propriedade Intelectual
         </h1>
-        <div className="flex flex-col-reverse lg:flex-row-reverse gap-8">
-          <div className="lg:w-1/2 xl:max-h-[calc(100vh-150px)] relative">
+        <div className="flex flex-col gap-8">
+          <div className="lg:w-full">
+            {/* <div className="space-y-4 mb-8">
+              <h2 className="text-4xl font-bold pt-2">
+                Projeto -{' '}
+                <span className="font-semibold">Histórias em pesquisa</span>
+              </h2>
+              <p>
+                &ldquo;História em Pesquisa&ldquo; é a primeira edição do Núcleo
+                de Desenvolvimento de Roteiros da PAPOULA. Esse projeto é
+                realizado em parceria com a PPG-ARTES da Universidade Estadual
+                do Paraná (UNESPAR), e viabilizado pela Lei Paulo Gustavo.
+              </p>
+            </div> */}
+            <div className="flex items-center pb-4">
+              {/* <div className=""> */}
+              <Link href="/" className="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="46"
+                  height="46"
+                  fill="#000000"
+                  className="md:w-[7vw] md:h-[7vw] lg:w-[4.5vw] lg:h-[4.5vw] xl:w-[4vw] xl:h-[4vw] transform transition-transform duration-300 ease-in-out hover:scale-110 hover:fill-papoula-blue "
+                  viewBox="0 0 256 256"
+                >
+                  <path d="M128,28A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.1,92.1,0,0,1,128,220ZM146.83,90.83,109.66,128l37.17,37.17a4,4,0,0,1-5.66,5.66l-40-40a4,4,0,0,1,0-5.66l40-40a4,4,0,1,1,5.66,5.66Z"></path>
+                </svg>
+              </Link>
+              {/* </div> */}
+              <h2 className="md:text-4xl text-3xl md:m-auto text-center flex flex-col lg:flex-row">
+                Projeto -{' '}
+                <span className="font-semibold">Histórias em pesquisa</span>
+              </h2>
+            </div>
+            <div
+              className="space-y-4 pb-12 text-center lg:text-left"
+              id="info-p"
+            >
+              <p>
+                &ldquo;História em Pesquisa&ldquo; é a primeira edição do Núcleo
+                de Desenvolvimento de Roteiros da PAPOULA. Esse projeto é
+                realizado em parceria com a PPG-ARTES da Universidade Estadual
+                do Paraná (UNESPAR), e viabilizado pela Lei Paulo Gustavo.
+              </p>
+
+              <p>
+                O formulário a seguir é parte do processo seletivo dos autores
+                participantes do núcleo. Serão selecionados 4 roteiristas,
+                autores, pesquisadores e/ou interessados na criação de conteúdo,
+                para participar dessa edição do &ldquo;História em
+                Pesquisa&ldquo;.
+              </p>
+
+              <p>
+                O objetivo do núcleo é desenvolver 4 roteiros baseados em
+                pesquisas realizadas na UNESPAR. Cada autor selecionado será
+                responsável pelo desenvolvimento de 1 roteiro, podendo ser um
+                autor individual ou um coletivo. O núcleo tem duração de até 12
+                meses e acontece por meio de encontros semanais de 1h30. A data
+                e horário será acordada com os participantes selecionados.
+              </p>
+
+              <p>
+                Os autores interessados precisam mostrar disponibilidade,
+                engajamento e interesse em desenvolver histórias baseadas nas
+                pesquisas escolhidas, com temáticas diversas e alinhadas com os
+                Objetivos de Desenvolvimento Sustentável (ODS) da ONU. É preciso
+                também estar disposto a desenvolver um roteiro enquanto
+                contribui com o desenvolvimento do roteiro de terceiros.
+              </p>
+
+              <p>
+                O processo de desenvolvimento vai contar com a consultoria
+                acadêmica de Solange Stecz, para orientação sobre os processos
+                de adaptação da pesquisa, uma consultoria especializada de
+                roteiro com Ana Johann, para orientação sobre desenvolvimento de
+                dramaturgia, e uma consultoria de negócios com Diogo Capriotti,
+                para orientação sobre a criação de bíblia e venda do projeto. Já
+                os encontros semanais serão mediados pela produtora Paula
+                Navarro, que vai auxiliar nos caminhos de adaptação e
+                viabilização das histórias.
+              </p>
+
+              <p>
+                Os autores selecionados receberão, além das consultorias,
+                materiais de estudo necessários e pertinentes para o
+                desenvolvimento do projeto e uma recompensa de R$6.000, dividida
+                em quatro etapas e dependente das entregas necessárias em cada
+                etapa
+              </p>
+
+              <p>
+                A inscrição é aberta a todos os interessados, experientes ou não
+                na área, que morem em cidades do Paraná.
+              </p>
+
+              <p>
+                O núcleo encoraja a inscrição de pessoas diversas e se
+                compromete a acomodar diferentes necessidades para participação.
+              </p>
+
+              <p>
+                Dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
+                <a
+                  href="mailto:contato@papoulahub.com"
+                  className="font-bold underline text-sky-500 tracking-wide"
+                >
+                  contato@papoulahub.com
+                </a>
+              </p>
+            </div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-              <div className="space-y-6 pb-10">
-                <div>
+              <div className="space-y-6 pb-10 relative">
+                <div className="">
                   <h2 className="text-4xl font-bold pt-2">
                     Formulário de Inscrição
                   </h2>
@@ -689,54 +872,6 @@ export default function TwoColumnApplicationFormComponent() {
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold">FORMAÇÃO</h3>
-
-                  <AccessibleFormField
-                    label="Formação Acadêmica"
-                    id="Formação Acadêmica"
-                    videoSrc="/path-to-formacao-academica-video.mp4"
-                  >
-                    <Controller
-                      name="Formação Acadêmica"
-                      control={control}
-                      render={({ field }) => (
-                        <Textarea
-                          {...field}
-                          placeholder="Descreva sua formação acadêmica que achar relevante"
-                        />
-                      )}
-                    />
-                    {errors['Formação Acadêmica'] && (
-                      <p className="text-red-500">
-                        {errors['Formação Acadêmica'].message}
-                      </p>
-                    )}
-                  </AccessibleFormField>
-
-                  <AccessibleFormField
-                    label="Cursos e Certificados"
-                    id="Cursos e Certificados"
-                    videoSrc="/path-to-cursos-certificados-video.mp4"
-                  >
-                    <Controller
-                      name="Cursos e Certificados"
-                      control={control}
-                      render={({ field }) => (
-                        <Textarea
-                          {...field}
-                          placeholder="Descreva outras formações e capacitações que achar relevante"
-                        />
-                      )}
-                    />
-                    {errors['Cursos e Certificados'] && (
-                      <p className="text-red-500">
-                        {errors['Cursos e Certificados'].message}
-                      </p>
-                    )}
-                  </AccessibleFormField>
-                </div>
-
-                <div className="space-y-4">
                   <h3 className="text-xl font-semibold">
                     EXPERIÊNCIA NO AUDIOVISUAL
                   </h3>
@@ -780,6 +915,58 @@ export default function TwoColumnApplicationFormComponent() {
                       <p className="text-red-500">
                         {errors['Nível de Experiência'].message}
                       </p>
+                    )}
+                  </AccessibleFormField>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-semibold">FORMAÇÃO</h3>
+
+                  <AccessibleFormField
+                    label="Formação"
+                    id="Formação"
+                    videoSrc="/path-to-formacao-video.mp4"
+                  >
+                    <Controller
+                      name="Formação"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione sua formação" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Graduação em curso">
+                              Graduação em curso
+                            </SelectItem>
+                            <SelectItem value="Graduação completa">
+                              Graduação completa
+                            </SelectItem>
+                            <SelectItem value="Pós Graduação em curso">
+                              Pós Graduação em curso
+                            </SelectItem>
+                            <SelectItem value="Pós Graduação completa">
+                              Pós Graduação completa
+                            </SelectItem>
+                            <SelectItem value="Cursos Livres na área do audiovisual">
+                              Cursos Livres na area do audiovisual
+                            </SelectItem>
+                            <SelectItem value="+ 5 Anos de experiência com escrita ou audiovisual">
+                              + 5 Anos de experiencia com escrita ou audiovisual
+                            </SelectItem>
+                            <SelectItem value="Não tenho nenhuma formação, nem experiência na área">
+                              Não tenho nenhuma formação, nem experiência na
+                              área
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                    {errors.Formação && (
+                      <p className="text-red-500">{errors.Formação.message}</p>
                     )}
                   </AccessibleFormField>
                 </div>
@@ -896,7 +1083,6 @@ export default function TwoColumnApplicationFormComponent() {
                             'Quero aprimorar minhas habilidades de escrita e pesquisa dentro do núcleo.',
                             'Conhecer pessoas do meio.',
                             'Já participei de outro(s) núcleo(s) anteriormente e adoro o processo de desenvolvimento.',
-                            'Possuo uma ideia de projeto/pesquisa que poderá ser enriquecido pelo núcleo.',
                           ].map((option) => (
                             <div
                               key={option}
@@ -952,105 +1138,18 @@ export default function TwoColumnApplicationFormComponent() {
                   </AccessibleFormField>
                 </div>
 
-                <Button type="submit">Enviar Inscrição</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    'Enviar Inscrição'
+                  )}
+                </Button>
               </div>
             </form>
-          </div>
-          <div className="lg:w-[48%] lg:fixed lg:top-[90px] lg:left-4 lg:bottom-4 overflow-y-auto p-6 text-center">
-            <div className="flex items-center pb-4">
-              <div className="absolute">
-                <Link href="/" className="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="46"
-                    height="46"
-                    fill="#000000"
-                    className="lg:w-[3vw] lg:h-[3vw] transform transition-transform duration-300 ease-in-out hover:scale-110 hover:fill-papoula-blue "
-                    viewBox="0 0 256 256"
-                  >
-                    <path d="M128,28A100,100,0,1,0,228,128,100.11,100.11,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.1,92.1,0,0,1,128,220ZM146.83,90.83,109.66,128l37.17,37.17a4,4,0,0,1-5.66,5.66l-40-40a4,4,0,0,1,0-5.66l40-40a4,4,0,1,1,5.66,5.66Z"></path>
-                  </svg>
-                </Link>
-              </div>
-              <h2 className="md:text-4xl text-4xl m-auto flex flex-col lg:flex-row">
-                Projeto -{' '}
-                <span className="font-semibold">Histórias em pesquisa</span>
-              </h2>
-            </div>
-            <div className="space-y-4">
-              <p>
-                &ldquo;História em Pesquisa&ldquo; é a primeira edição do Núcleo
-                de Desenvolvimento de Roteiros da PAPOULA. Esse projeto é
-                realizado em parceria com a PPG-ARTES da Universidade Estadual
-                do Paraná (UNESPAR), e viabilizado pela Lei Paulo Gustavo.
-              </p>
-
-              <p>
-                O formulário a seguir é parte do processo seletivo dos autores
-                participantes do núcleo. Serão selecionados 4 roteiristas,
-                autores, pesquisadores e/ou interessados na criação de conteúdo,
-                para participar dessa edição do &ldquo;História em
-                Pesquisa&ldquo;.
-              </p>
-
-              <p>
-                O objetivo do núcleo é desenvolver 4 roteiros baseados em
-                pesquisas realizadas na UNESPAR. Cada autor selecionado será
-                responsável pelo desenvolvimento de 1 roteiro, podendo ser um
-                autor individual ou um coletivo. O núcleo tem duração de até 12
-                meses e acontece por meio de encontros semanais de 1h30. A data
-                e horário será acordada com os participantes selecionados.
-              </p>
-
-              <p>
-                Os autores interessados precisam mostrar disponibilidade,
-                engajamento e interesse em desenvolver histórias baseadas nas
-                pesquisas escolhidas, com temáticas diversas e alinhadas com os
-                Objetivos de Desenvolvimento Sustentável (ODS) da ONU. É preciso
-                também estar disposto a desenvolver um roteiro enquanto
-                contribui com o desenvolvimento do roteiro de terceiros.
-              </p>
-
-              <p>
-                O processo de desenvolvimento vai contar com a consultoria
-                acadêmica de Solange Stecz, para orientação sobre os processos
-                de adaptação da pesquisa, uma consultoria especializada de
-                roteiro com Ana Johann, para orientação sobre desenvolvimento de
-                dramaturgia, e uma consultoria de negócios com Diogo Capriotti,
-                para orientação sobre a criação de bíblia e venda do projeto. Já
-                os encontros semanais serão mediados pela produtora Paula
-                Navarro, que vai auxiliar nos caminhos de adaptação e
-                viabilização das histórias.
-              </p>
-
-              <p>
-                Os autores selecionados receberão, além das consultorias,
-                materiais de estudo necessários e pertinentes para o
-                desenvolvimento do projeto. Os 4 autores também receberão uma
-                ajuda de custos de R$500 por mês durante o período de
-                participação.
-              </p>
-
-              <p>
-                A inscrição é aberta a todos os interessados, experientes ou não
-                na área, que morem em cidades do Paraná.
-              </p>
-
-              <p>
-                O núcleo encoraja a inscrição de pessoas diversas e se
-                compromete a acomodar diferentes necessidades para participação.
-              </p>
-
-              <p>
-                Dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
-                <a
-                  href="mailto:contato@papoulahub.com"
-                  className="font-bold underline text-sky-500 tracking-wide"
-                >
-                  contato@papoulahub.com
-                </a>
-              </p>
-            </div>
           </div>
         </div>
       </div>
