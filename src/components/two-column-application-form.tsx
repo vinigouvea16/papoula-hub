@@ -392,9 +392,8 @@ export default function TwoColumnApplicationFormComponent() {
                 </svg>
               </Link>
               {/* </div> */}
-              <h2 className="md:text-4xl text-3xl md:m-auto text-center flex flex-col lg:flex-row">
-                Projeto -{' '}
-                <span className="font-semibold">Histórias em pesquisa</span>
+              <h2 className="md:text-4xl text-3xl md:m-auto text-center font-semibold uppercase">
+                História em pesquisa
               </h2>
             </div>
             <div

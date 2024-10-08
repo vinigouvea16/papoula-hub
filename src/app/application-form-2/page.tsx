@@ -224,14 +224,17 @@ export default function TwoColumnApplicationFormStep2() {
           },
         }}
       />
-      <div className="container mx-auto px-4 py-8">
+      <div className="mx-auto px-4 py-8 md:w-[80%]">
         <h1 className="text-4xl font-bold text-center mb-8">
           Núcleo Criativo para Desenvolvimento de Propriedade Intelectual
         </h1>
-        <div className="flex flex-col-reverse lg:flex-row gap-4">
-          <div className="lg:w-[50%] md:overflow-y-scroll max-h-[calc(100vh-150px)] relative">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-              <div className="space-y-6 md:px-4">
+        <div className="flex flex-col-reverse lg:flex-col-reverse gap-4">
+          <div className="max-h-[calc(100vh-150px)] ">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-8 relative"
+            >
+              <div className="space-y-6 pb-10">
                 <div className="absolute right-4 top-5 z-10">
                   <svg
                     width="80"
@@ -662,7 +665,7 @@ export default function TwoColumnApplicationFormStep2() {
               </div>
             </form>
           </div>
-          <div className="lg:w-1/2 lg:sticky lg:top-[150px] lg:h-[calc(100vh-150px)] overflow-y-auto bg-transparent border border-black p-6 rounded-lg">
+          <div className="space-y-4 pb-12 text-center lg:text-left">
             <h2 className="text-2xl font-bold mb-4">
               Informações sobre o Formulário - Etapa 2
             </h2>
@@ -677,23 +680,7 @@ export default function TwoColumnApplicationFormStep2() {
             <ul className="list-disc list-inside mb-4">
               <li>Certifique-se de usar o mesmo email utilizado na Etapa 1.</li>
               <li>Seja detalhado e específico em suas respostas.</li>
-              <li>
-                Reflita sobre como sua experiência e projetos se alinham com os
-                ODS.
-              </li>
-              <li>
-                Se tiver dúvidas, use os botões de vídeo para obter mais
-                informações sobre cada campo.
-              </li>
             </ul>
-            <h3 className="text-xl font-semibold mb-2">Sobre os ODS:</h3>
-            <p className="mb-4">
-              Os Objetivos de Desenvolvimento Sustentável (ODS) são uma coleção
-              de 17 metas globais estabelecidas pela Assembleia Geral das Nações
-              Unidas. Eles abordam os desafios globais que enfrentamos,
-              incluindo pobreza, desigualdade, mudança climática, degradação
-              ambiental, paz e justiça.
-            </p>
             <h3 className="text-xl font-semibold mb-2">Próximos Passos:</h3>
             <p className="mb-4">
               Após o envio deste formulário, sua inscrição completa (Etapa 1 e
