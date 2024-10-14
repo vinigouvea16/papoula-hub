@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-// import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -18,7 +17,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Loader2, VideoIcon } from 'lucide-react'
-// import Link from 'next/link'
 
 const formSchema = z.object({
   Email: z.string().email({ message: 'Email inválido' }),
@@ -74,13 +72,13 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
           <Button variant="default" size="icon" className="my-1">
             <VideoIcon className="h-4 w-4" />
             <span className="sr-only">
-              Watch accessibility video for {label}
+              Assista vídeo informativo para:{label}
             </span>
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Accessibility Video for {label}</DialogTitle>
+            <DialogTitle>Vídeo acessível para: {label}</DialogTitle>
           </DialogHeader>
           <video src={videoSrc} controls className="w-full">
             Your browser does not support the video tag.
@@ -110,9 +108,7 @@ export default function TwoColumnApplicationFormStep2() {
       'Projetos Pessoais': '',
       'Portfolio/Currículo': '',
       'Experiência Pesquisa': '',
-      // 'ODS Identificação': [],
       'Identificação ODS Razão': '',
-      // 'ODS Projetos': [],
       'Projetos ODS Relação': '',
     },
   })
@@ -188,26 +184,6 @@ export default function TwoColumnApplicationFormStep2() {
     }
   }
 
-  // const odsOptions = [
-  //   'Erradicação da Pobreza',
-  //   'Fome Zero e Agricultura Sustentável',
-  //   'Saúde e Bem-Estar',
-  //   'Educação de Qualidade',
-  //   'Igualdade de Gênero',
-  //   'Água Potável e Saneamento',
-  //   'Energia Limpa e Acessível',
-  //   'Trabalho Decente e Crescimento Econômico',
-  //   'Indústria, Inovação e Infraestrutura',
-  //   'Redução das Desigualdades',
-  //   'Cidades e Comunidades Sustentáveis',
-  //   'Consumo e Produção Responsáveis',
-  //   'Ação Contra a Mudança Global do Clima',
-  //   'Vida na Água',
-  //   'Vida Terrestre',
-  //   'Paz, Justiça e Instituições Eficazes',
-  //   'Parcerias e Meios de Implementação',
-  // ]
-
   return (
     <>
       <Toaster
@@ -224,7 +200,7 @@ export default function TwoColumnApplicationFormStep2() {
           },
         }}
       />
-      <div className="mx-auto px-4 py-8 md:w-[80%]">
+      <div className="mx-auto px-4 py-8 md:w-[80%] font-raleway">
         <h1 className="text-4xl font-bold text-center mb-8">
           Núcleo Criativo para Desenvolvimento de Propriedade Intelectual
         </h1>
@@ -401,7 +377,7 @@ export default function TwoColumnApplicationFormStep2() {
                   <AccessibleFormField
                     label="Experiência em Roteiro e Audiovisual"
                     id="Experiencia Roteiro"
-                    videoSrc="/path-to-experiencia-roteiro-video.mp4"
+                    videoSrc="/videos/form2/experienciaRoteiro.mp4"
                   >
                     <Controller
                       name="Experiência Roteiro"
@@ -423,7 +399,7 @@ export default function TwoColumnApplicationFormStep2() {
                   <AccessibleFormField
                     label="Experiência em Núcleos Criativos"
                     id="Experiência Núcleos"
-                    videoSrc="/path-to-experiencia-nucleos-video.mp4"
+                    videoSrc="/videos/form2/experienciaNucleo.mp4"
                   >
                     <Controller
                       name="Experiência Núcleos"
@@ -445,7 +421,7 @@ export default function TwoColumnApplicationFormStep2() {
                   <AccessibleFormField
                     label="Projetos Pessoais"
                     id="Projetos Pessoais"
-                    videoSrc="/path-to-projetos-pessoais-video.mp4"
+                    videoSrc="/videos/form2/projetospessoais.mp4"
                   >
                     <Controller
                       name="Projetos Pessoais"
@@ -465,9 +441,9 @@ export default function TwoColumnApplicationFormStep2() {
                   </AccessibleFormField>
 
                   <AccessibleFormField
-                    label="Portfólio/Currículo lattes (Opcional)"
+                    label="Portfólio/Currículo (Opcional)"
                     id="Portfolio/Currículo"
-                    videoSrc="/path-to-portfolio-lattes-video.mp4"
+                    videoSrc="/videos/form2/portfolio.mp4"
                   >
                     <Controller
                       name="Portfolio/Currículo"
@@ -475,7 +451,7 @@ export default function TwoColumnApplicationFormStep2() {
                       render={({ field }) => (
                         <Input
                           {...field}
-                          placeholder="Insira o link para seu portfólio ou CV Lattes"
+                          placeholder="Insira o link para seu portfólio ou currículo"
                         />
                       )}
                     />
@@ -495,7 +471,7 @@ export default function TwoColumnApplicationFormStep2() {
                   <AccessibleFormField
                     label="Experiência com Pesquisa Científica/Acadêmica"
                     id="Experiência Pesquisa"
-                    videoSrc="/path-to-experiencia-pesquisa-video.mp4"
+                    videoSrc="/videos/form2/experienciaComPesquisa.mp4"
                   >
                     <Controller
                       name="Experiência Pesquisa"
@@ -513,57 +489,12 @@ export default function TwoColumnApplicationFormStep2() {
                       </p>
                     )}
                   </AccessibleFormField>
-                  {/* Checkbox lista ODS identificação */}
-                  {/* <AccessibleFormField
-                    label="Com qual/quais ODS você mais se identifica?"
-                    id="ODS Identificação"
-                    videoSrc="/path-to-ods-identificacao-video.mp4"
-                  >
-                    <Controller
-                      name="ODS Identificação"
-                      control={control}
-                      render={({ field }) => (
-                        <div className="space-y-2">
-                          {odsOptions.map((ods) => (
-                            <div
-                              key={ods}
-                              className="flex items-center space-x-2"
-                            >
-                              <Checkbox
-                                id={`ods-identificacao-${ods}`}
-                                checked={field.value.includes(ods)}
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    field.onChange([...field.value, ods])
-                                  } else {
-                                    field.onChange(
-                                      field.value.filter(
-                                        (value) => value !== ods,
-                                      ),
-                                    )
-                                  }
-                                }}
-                              />
-                              <label htmlFor={`ods-identificacao-${ods}`}>
-                                {ods}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    />
-                    {errors['ODS Identificação'] && (
-                      <p className="text-red-500">
-                        {errors['ODS Identificação'].message}
-                      </p>
-                    )}
-                  </AccessibleFormField> */}
 
                   {/* Textarea ODS identificação */}
                   <AccessibleFormField
                     label="Por que você se identifica com os ODS selecionados na etapa anterior?"
                     id="Identificação ODS Razão"
-                    videoSrc="/path-to-identificacao-ods-razao-video.mp4"
+                    videoSrc="/videos/form2/identificacaoODS.mp4"
                   >
                     <Controller
                       name="Identificação ODS Razão"
@@ -582,57 +513,11 @@ export default function TwoColumnApplicationFormStep2() {
                     )}
                   </AccessibleFormField>
 
-                  {/* Checkbox lista ODS projeto */}
-                  {/* <AccessibleFormField
-                    label="Com qual/quais ODS seus projetos mais se encaixam?"
-                    id="ODS Projetos"
-                    videoSrc="/path-to-ods-projetos-video.mp4"
-                  >
-                    <Controller
-                      name="ODS Projetos"
-                      control={control}
-                      render={({ field }) => (
-                        <div className="space-y-2">
-                          {odsOptions.map((ods) => (
-                            <div
-                              key={ods}
-                              className="flex items-center space-x-2"
-                            >
-                              <Checkbox
-                                id={`ods-projetos-${ods}`}
-                                checked={field.value.includes(ods)}
-                                onCheckedChange={(checked) => {
-                                  if (checked) {
-                                    field.onChange([...field.value, ods])
-                                  } else {
-                                    field.onChange(
-                                      field.value.filter(
-                                        (value) => value !== ods,
-                                      ),
-                                    )
-                                  }
-                                }}
-                              />
-                              <label htmlFor={`ods-projetos-${ods}`}>
-                                {ods}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    />
-                    {errors['ODS Projetos'] && (
-                      <p className="text-red-500">
-                        {errors['ODS Projetos'].message}
-                      </p>
-                    )}
-                  </AccessibleFormField> */}
-
                   {/* Textarea ODS Projeto */}
                   <AccessibleFormField
                     label="Descreva como seus projetos se relacionam com os ODS selecionados na etapa anterior"
                     id="Projetos ODS Relação"
-                    videoSrc="/path-to-projetos-ods-relacao-video.mp4"
+                    videoSrc="/videos/form2/projetosODS.mp4"
                   >
                     <Controller
                       name="Projetos ODS Relação"
@@ -693,7 +578,7 @@ export default function TwoColumnApplicationFormStep2() {
               Quaisquer dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
               <a
                 href="mailto:contato@papoulahub.com"
-                className="font-bold underline text-sky-500 tracking-wide"
+                className="font-bold underline text-sky-900 tracking-wide"
               >
                 contato@papoulahub.com
               </a>

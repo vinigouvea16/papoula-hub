@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
         <div
           id="made-by"
-          className="font-extralight flex flex-row text-center items-end gap-1"
+          className="font-extralight flex flex-row text-center font-raleway items-end gap-1 lg:mb-0 lg:mr-4 mb-8"
         >
           <span>made by</span>
           <span className="italic text-xl">

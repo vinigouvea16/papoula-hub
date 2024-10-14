@@ -25,6 +25,7 @@ export default function Intro() {
           href="#cta"
           className="text-5xl text-white absolute bottom-[10%] right-[2%] transform transition-transform duration-500 ease-out hover:scale-125 hover:-rotate-180"
         >
+          <span className="sr-only">Call to action</span>
           <svg
             width="80"
             height="80"

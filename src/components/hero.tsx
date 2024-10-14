@@ -3,8 +3,11 @@ import React from 'react'
 
 export default function Hero() {
   return (
-    <div className="h-full bg-black 2xl:px-32 lg:px-10 px-2 pb-14 pt-44 text-papoula-text flex-col">
-      <div className="relative lg:gap-8 gap-2 flex justify-end" id="about-hero">
+    <div className="h-full bg-black 2xl:px-32 lg:px-10  font-maxiRound px-2 pb-14 pt-44 text-papoula-text flex-col">
+      <div
+        className="relative lg:gap-8 gap-2 flex justify-end overflow-x-hidden"
+        id="about-hero"
+      >
         <Image
           src="/images/heroimage2.jpg"
           width={560}
@@ -19,7 +22,7 @@ export default function Hero() {
           className="brightness-50  w-[180px] h-[354px]  md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[500px] xl:w-[560px] xl:h-[620px] object-cover"
           alt="Picture of the author"
         />
-        <h2 className="uppercase text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold absolute bottom-[20%] md:bottom-1/4 left-3">
+        <h2 className="uppercase text-5xl  font-maxiRound md:text-6xl lg:text-7xl xl:text-8xl font-bold absolute bottom-[20%] md:bottom-1/4 left-3">
           sobre nós
         </h2>
       </div>
@@ -28,31 +31,32 @@ export default function Hero() {
         className="lg:flex-row flex flex-col 2xl:gap-28 lg:gap-16 pt-52 gap-20"
         id="mission"
       >
-        <div className="lg:text-start text-center xl:w-1/2">
-          <h2 className="text-5xl font-bold pb-5">Posicionamento</h2>
+        <div className=" text-center">
+          <h2 className="text-5xl font-bold pb-5 font-maxiRound">
+            Posicionamento
+          </h2>
           <p className="lg:text-2xl tracking-widest">
-            A Papoula nasce da necessidade de criar pontes entre as mentes
-            solitárias que se perdem em seu isolamento. Existimos para ocupar os
-            espaços que permeiam os meios do caminho, e acreditamos no poder do
-            coletivo, transformando em solo fértil - terrenos perdidos.
+            Papoula nasce do desejo de conectar. Acreditamos no poder do
+            coletivo e existimos para ocupar os espaços entre pessoas e ideias,
+            transformando terrenos vazios em solo fértil para novas criações.
           </p>
         </div>
-        <div className="lg:text-start text-center xl:w-1/2">
-          <h3 className="text-5xl font-bold pb-5">Missão</h3>
+        {/* <div className="lg:text-start text-center xl:w-1/2">
+          <h3 className="text-5xl font-bold pb-5 font-maxiRound">Missão</h3>
           <p className="lg:text-2xl tracking-widest ">
             <span className="italic lg:text-3xl text-xl">tapar buraco</span> -
             Ser uma plataforma de conexões e de criação de propriedade
             intelectual, um conjunto de ferramentas que quer deixar a vida mais
             leve, tanto para o colaborador quanto para a audiência.
           </p>
-        </div>
+        </div> */}
       </div>
-      <div
+      {/* <div
         className="lg:flex-row flex flex-col 2xl:gap-28 lg:gap-16 lg:pt-52 pt-28"
         id="card-section"
       >
         <div className="border-t-2 border-b-2 border-papoula-text py-11 2xl:w-[47%] mb-28">
-          <p className="lg:text-3xl text-xl tracking-wider text-center lg:text-start italic ">
+          <p className="lg:text-3xl text-xl tracking-wider font-light text-center lg:text-start italic ">
             “A Papoula é uma marca com um pouco de mistério, quem não é do
             audiovisual pode não entender suas atividades laborais, mas quer
             acompanhar o conteúdo que está sendo produzido. Quem trabalha com
@@ -61,7 +65,6 @@ export default function Hero() {
           </p>
         </div>
         <div id="card-section" className="relative">
-          {/* SVG Container */}
           <div
             id="card-svg"
             className="
@@ -81,7 +84,6 @@ export default function Hero() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* SVG Ellipses */}
               <ellipse
                 cx="12.404"
                 cy="12.404"
@@ -211,7 +213,6 @@ export default function Hero() {
             </svg>
           </div>
 
-          {/* Card Container */}
           <div
             id="card"
             className="
@@ -254,8 +255,8 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center pt-24 pb-14">
+      </div> */}
+      {/* <div className="flex justify-center pt-24 pb-14">
         <p className="font-bold lg:text-[3vw] text-3xl text-center flex flex-col lg:flex-row gap-4">
           <span>ENTRETENIMENTO</span>
           <span>+</span>
@@ -263,7 +264,7 @@ export default function Hero() {
           <span>=</span>
           <span>PAPOULA</span>
         </p>
-      </div>
+      </div> */}
     </div>
   )
 }

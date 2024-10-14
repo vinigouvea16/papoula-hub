@@ -26,7 +26,7 @@ import {
 import { Loader2, VideoIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Textarea } from './ui/textarea'
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 const formSchema = z.object({
   Email: z.string().email({ message: 'Email inválido' }),
@@ -129,16 +129,20 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
       </Label>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="default" size="icon">
+          <Button
+            variant="default"
+            size="icon"
+            aria-label={`Assista vídeo informativo para: ${label}`}
+          >
             <VideoIcon className="h-4 w-4" />
             <span className="sr-only">
-              Watch accessibility video for {label}
+              Assista vídeo informativo para: {label}
             </span>
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Accessibility Video for {label}</DialogTitle>
+            <DialogTitle>Vídeo acessível para: {label}</DialogTitle>
           </DialogHeader>
           <video src={videoSrc} controls className="w-full">
             Your browser does not support the video tag.
@@ -147,6 +151,83 @@ const AccessibleFormField: React.FC<AccessibleFormFieldProps> = ({
       </Dialog>
     </div>
     {children}
+  </div>
+)
+
+interface AccessibleInfoProps {
+  videoSrc: string
+  label: string
+  htmlFor?: string
+  children?: ReactNode // Adicionando explicitamente a prop 'children'
+}
+
+const AccessibleInfo: React.FC<AccessibleInfoProps> = ({
+  videoSrc,
+  label,
+  htmlFor,
+  children,
+}) => (
+  <div className="space-y-2">
+    {htmlFor ? (
+      <label
+        htmlFor={htmlFor}
+        className="flex md:flex-row flex-col md:space-y-0 space-y-4 items-center"
+      >
+        {children}
+        <div className="flex space-x-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="default"
+                size="icon"
+                aria-label={`Assista vídeo acessível para: ${label}`}
+              >
+                <VideoIcon className="h-4 w-4" />
+                <span className="sr-only">
+                  Assista vídeo acessível para: {label}
+                </span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Vídeo acessível para: {label}</DialogTitle>
+              </DialogHeader>
+              <video src={videoSrc} controls className="w-full">
+                Your browser does not support the video tag.
+              </video>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </label>
+    ) : (
+      <div className="flex md:flex-row flex-col items-center space-y-2">
+        {children}
+        <div className="flex  space-x-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="default"
+                size="icon"
+                aria-label={`Assista vídeo acessível para: ${label}`}
+              >
+                <VideoIcon className="h-4 w-4" />
+                <span className="sr-only">
+                  Assista vídeo acessível para: {label}
+                </span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Vídeo acessível para: {label}</DialogTitle>
+              </DialogHeader>
+              <video src={videoSrc} controls className="w-full">
+                Your browser does not support the video tag.
+              </video>
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
+    )}
   </div>
 )
 
@@ -380,6 +461,7 @@ export default function TwoColumnApplicationFormComponent() {
             <div className="flex items-center pb-4">
               {/* <div className=""> */}
               <Link href="/" className="">
+                <span className="sr-only">Voltar para página inicial</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="46"
@@ -400,78 +482,118 @@ export default function TwoColumnApplicationFormComponent() {
               className="space-y-4 pb-12 text-center lg:text-left"
               id="info-p"
             >
-              <p>
-                &ldquo;História em Pesquisa&ldquo; é a primeira edição do Núcleo
-                de Desenvolvimento de Roteiros da PAPOULA. Esse projeto é
-                realizado em parceria com a PPG-ARTES da Universidade Estadual
-                do Paraná (UNESPAR), e viabilizado pela Lei Paulo Gustavo.
-              </p>
+              <AccessibleInfo
+                label="parágrafo um"
+                videoSrc="/videos/text/P1.mp4"
+              >
+                <p>
+                  &ldquo;História em Pesquisa&ldquo; é a primeira edição do
+                  Núcleo de Desenvolvimento de Roteiros da PAPOULA. Esse projeto
+                  é realizado em parceria com a PPG-ARTES da Universidade
+                  Estadual do Paraná (UNESPAR), e viabilizado pela Lei Paulo
+                  Gustavo.
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                O formulário a seguir é parte do processo seletivo dos autores
-                participantes do núcleo. Serão selecionados 4 roteiristas,
-                autores, pesquisadores e/ou interessados na criação de conteúdo,
-                para participar dessa edição do &ldquo;História em
-                Pesquisa&ldquo;.
-              </p>
+              <AccessibleInfo
+                label="parágrafo dois"
+                videoSrc="/videos/text/P2.mp4"
+              >
+                <p>
+                  O formulário a seguir é parte do processo seletivo dos autores
+                  participantes do núcleo. Serão selecionados 4 roteiristas,
+                  autores, pesquisadores e/ou interessados na criação de
+                  conteúdo, para participar dessa edição do &ldquo;História em
+                  Pesquisa&ldquo;.
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                O objetivo do núcleo é desenvolver 4 roteiros baseados em
-                pesquisas realizadas na UNESPAR. Cada autor selecionado será
-                responsável pelo desenvolvimento de 1 roteiro, podendo ser um
-                autor individual ou um coletivo. O núcleo tem duração de até 12
-                meses e acontece por meio de encontros semanais de 1h30. A data
-                e horário será acordada com os participantes selecionados.
-              </p>
+              <AccessibleInfo
+                label="parágrafo três"
+                videoSrc="/videos/text/P3.mp4"
+              >
+                <p>
+                  O objetivo do núcleo é desenvolver 4 roteiros baseados em
+                  pesquisas realizadas na UNESPAR. Cada autor selecionado será
+                  responsável pelo desenvolvimento de 1 roteiro, podendo ser um
+                  autor individual ou um coletivo. O núcleo tem duração de até
+                  12 meses e acontece por meio de encontros semanais de 1h30. A
+                  data e horário será acordada com os participantes
+                  selecionados.
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                Os autores interessados precisam mostrar disponibilidade,
-                engajamento e interesse em desenvolver histórias baseadas nas
-                pesquisas escolhidas, com temáticas diversas e alinhadas com os
-                Objetivos de Desenvolvimento Sustentável (ODS) da ONU. É preciso
-                também estar disposto a desenvolver um roteiro enquanto
-                contribui com o desenvolvimento do roteiro de terceiros.
-              </p>
+              <AccessibleInfo
+                label="parágrafo quatro"
+                videoSrc="/videos/text/P4.mp4"
+              >
+                <p>
+                  Os autores interessados precisam mostrar disponibilidade,
+                  engajamento e interesse em desenvolver histórias baseadas nas
+                  pesquisas escolhidas, com temáticas diversas e alinhadas com
+                  os Objetivos de Desenvolvimento Sustentável (ODS) da ONU. É
+                  preciso também estar disposto a desenvolver um roteiro
+                  enquanto contribui com o desenvolvimento do roteiro de
+                  terceiros.
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                O processo de desenvolvimento vai contar com a consultoria
-                acadêmica de Solange Stecz, para orientação sobre os processos
-                de adaptação da pesquisa, uma consultoria especializada de
-                roteiro com Ana Johann, para orientação sobre desenvolvimento de
-                dramaturgia, e uma consultoria de negócios com Diogo Capriotti,
-                para orientação sobre a criação de bíblia e venda do projeto. Já
-                os encontros semanais serão mediados pela produtora Paula
-                Navarro, que vai auxiliar nos caminhos de adaptação e
-                viabilização das histórias.
-              </p>
+              <AccessibleInfo
+                label="parágrafo cinco"
+                videoSrc="/videos/text/P5.mp4"
+              >
+                <p>
+                  O processo de desenvolvimento vai contar com a consultoria
+                  acadêmica de Solange Stecz, para orientação sobre os processos
+                  de adaptação da pesquisa, uma consultoria especializada de
+                  roteiro com Ana Johann, para orientação sobre desenvolvimento
+                  de dramaturgia, e uma consultoria de negócios com Diogo
+                  Capriotti, para orientação sobre a criação de bíblia e venda
+                  do projeto. Já os encontros semanais serão mediados pela
+                  produtora Paula Navarro, que vai auxiliar nos caminhos de
+                  adaptação e viabilização das histórias.
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                Os autores selecionados receberão, além das consultorias,
-                materiais de estudo necessários e pertinentes para o
-                desenvolvimento do projeto e uma recompensa de R$6.000, dividida
-                em quatro etapas e dependente das entregas necessárias em cada
-                etapa
-              </p>
+              <AccessibleInfo
+                label="parágrafo seis"
+                videoSrc="/videos/text/P6.mp4"
+              >
+                <p>
+                  Os autores selecionados receberão, além das consultorias,
+                  materiais de estudo necessários e pertinentes para o
+                  desenvolvimento do projeto e uma recompensa de R$6.000,
+                  dividida em quatro etapas e dependente das entregas
+                  necessárias em cada etapa
+                </p>
+              </AccessibleInfo>
 
-              <p>
-                A inscrição é aberta a todos os interessados, experientes ou não
-                na área, que morem em cidades do Paraná.
-              </p>
+              <AccessibleInfo
+                videoSrc="/videos/text/P7.mp4"
+                label="parágrafo sete"
+                htmlFor="form-field-id"
+              >
+                <p>
+                  A inscrição é aberta a todos os interessados, experientes ou
+                  não na área, que morem em cidades do Paraná.
+                </p>
 
-              <p>
-                O núcleo encoraja a inscrição de pessoas diversas e se
-                compromete a acomodar diferentes necessidades para participação.
-              </p>
+                <p>
+                  O núcleo encoraja a inscrição de pessoas diversas e se
+                  compromete a acomodar diferentes necessidades para
+                  participação.
+                </p>
 
-              <p>
-                Dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
-                <a
-                  href="mailto:contato@papoulahub.com"
-                  className="font-bold underline text-sky-500 tracking-wide"
-                >
-                  contato@papoulahub.com
-                </a>
-              </p>
+                <p>
+                  Dúvidas sobre o processo podem ser enviadas ao e-mail:{' '}
+                  <a
+                    href="mailto:contato@papoulahub.com"
+                    className="font-bold underline text-sky-900 tracking-wide"
+                  >
+                    contato@papoulahub.com
+                  </a>
+                </p>
+              </AccessibleInfo>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
               <div className="space-y-6 pb-10 relative">
@@ -550,6 +672,10 @@ export default function TwoColumnApplicationFormComponent() {
                         <Input
                           {...field}
                           placeholder="Insira o melhor email para falar com você"
+                          aria-invalid={errors.Email ? 'true' : 'false'}
+                          aria-describedby={
+                            errors.Email ? 'email-error' : undefined
+                          }
                         />
                       )}
                     />
@@ -561,7 +687,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Nome Social"
                     id="Nome Social"
-                    videoSrc="/path-to-nome-social-video.mp4"
+                    videoSrc="/videos/form1/nomeSocial.mp4"
                   >
                     <Controller
                       name="Nome Social"
@@ -580,7 +706,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Tipo de Roteirista"
                     id="Tipo de Roteirista"
-                    videoSrc="/path-to-tipo-roteirista-video.mp4"
+                    videoSrc="/videos/form1/roteirista.mp4"
                   >
                     <Controller
                       name="Tipo de Roteirista"
@@ -595,11 +721,21 @@ export default function TwoColumnApplicationFormComponent() {
                               value="Individual"
                               id="individual"
                             />
-                            <Label htmlFor="individual">Individual</Label>
+                            <Label
+                              htmlFor="individual"
+                              className="font-normal text-base"
+                            >
+                              Individual
+                            </Label>
                           </div>
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="Coletivo" id="coletivo" />
-                            <Label htmlFor="coletivo">Coletivo</Label>
+                            <Label
+                              htmlFor="coletivo"
+                              className="font-normal text-base"
+                            >
+                              Coletivo
+                            </Label>
                           </div>
                         </RadioGroup>
                       )}
@@ -614,7 +750,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Ano de Nascimento"
                     id="Ano de Nascimento"
-                    videoSrc="/path-to-ano-nascimento-video.mp4"
+                    videoSrc="/videos/form1/idade.mp4"
                   >
                     <Controller
                       name="Ano de Nascimento"
@@ -640,7 +776,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Raça/Etnia"
                     id="Raça/Etnia"
-                    videoSrc="/path-to-raca-etnia-video.mp4"
+                    videoSrc="/videos/form1/raca.mp4"
                   >
                     <Controller
                       name="Raça/Etnia"
@@ -650,7 +786,7 @@ export default function TwoColumnApplicationFormComponent() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger aria-label="Selecione uma opção">
                             <SelectValue placeholder="Selecione uma opção" />
                           </SelectTrigger>
                           <SelectContent>
@@ -695,7 +831,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Gênero e Orientação Sexual"
                     id="Gênero e Orientação Sexual"
-                    videoSrc="/path-to-genero-orientacao-video.mp4"
+                    videoSrc="/videos/form1/genero.mp4"
                   >
                     <Controller
                       name="Gênero e Orientação Sexual"
@@ -705,7 +841,7 @@ export default function TwoColumnApplicationFormComponent() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger aria-label="Escolha a opção de gênero e orientação sexual com que se identifica">
                             <SelectValue placeholder="Escolha a opção de gênero e orientação sexual com que se identifica" />
                           </SelectTrigger>
                           <SelectContent>
@@ -752,7 +888,7 @@ export default function TwoColumnApplicationFormComponent() {
                     <AccessibleFormField
                       label="Especifique Gênero e Orientação Sexual"
                       id="Gênero e Orientação Sexual (Especifique)"
-                      videoSrc="/path-to-genero-orientacao-outro-video.mp4"
+                      videoSrc="/videos/form1/genero.mp4"
                     >
                       <Controller
                         name="Gênero e Orientação Sexual (Especifique)"
@@ -775,7 +911,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Pessoa com Deficiência (PCD)"
                     id="PCD"
-                    videoSrc="/path-to-pcd-video.mp4"
+                    videoSrc="/videos/form1/pcd.mp4"
                   >
                     <Controller
                       name="PCD"
@@ -787,11 +923,21 @@ export default function TwoColumnApplicationFormComponent() {
                         >
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="Sim" id="pcd-sim" />
-                            <Label htmlFor="pcd-sim">Sim</Label>
+                            <Label
+                              htmlFor="pcd-sim"
+                              className="font-normal text-base"
+                            >
+                              Sim
+                            </Label>
                           </div>
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="Não" id="pcd-nao" />
-                            <Label htmlFor="pcd-nao">Não</Label>
+                            <Label
+                              htmlFor="pcd-nao"
+                              className="font-normal text-base"
+                            >
+                              Não
+                            </Label>
                           </div>
                         </RadioGroup>
                       )}
@@ -804,7 +950,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Recursos de Acessibilidade"
                     id="Recursos A11y"
-                    videoSrc="/path-to-recursos-a11y-video.mp4"
+                    videoSrc="/videos/form1/recursoa11y.mp4"
                   >
                     <Controller
                       name="Recursos A11y"
@@ -826,7 +972,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Região"
                     id="Região"
-                    videoSrc="/path-to-regiao-video.mp4"
+                    videoSrc="/videos/form1/regiao.mp4"
                   >
                     <Controller
                       name="Região"
@@ -836,7 +982,7 @@ export default function TwoColumnApplicationFormComponent() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger aria-label="Selecione uma opção">
                             <SelectValue placeholder="Selecione uma opção" />
                           </SelectTrigger>
                           <SelectContent>
@@ -878,7 +1024,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Nível de Experiência"
                     id="Nível de Experiência"
-                    videoSrc="/path-to-nivel-experiencia-video.mp4"
+                    videoSrc="/videos/form1/audiovisual.mp4"
                   >
                     <Controller
                       name="Nível de Experiência"
@@ -888,7 +1034,7 @@ export default function TwoColumnApplicationFormComponent() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger aria-label="Selecione seu nível de experiência">
                             <SelectValue placeholder="Selecione seu nível de experiência" />
                           </SelectTrigger>
                           <SelectContent>
@@ -924,7 +1070,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Formação"
                     id="Formação"
-                    videoSrc="/path-to-formacao-video.mp4"
+                    videoSrc="/videos/form1/formacao.mp4"
                   >
                     <Controller
                       name="Formação"
@@ -934,7 +1080,7 @@ export default function TwoColumnApplicationFormComponent() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger aria-label="Selecione sua formação">
                             <SelectValue placeholder="Selecione sua formação" />
                           </SelectTrigger>
                           <SelectContent>
@@ -976,7 +1122,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Com qual/quais ODS você mais se identifica?"
                     id="ODS Identificação"
-                    videoSrc="/path-to-ods-identificacao-video.mp4"
+                    videoSrc="/videos/form1/interesseODS.mp4"
                   >
                     <Controller
                       name="ODS Identificação"
@@ -1003,9 +1149,12 @@ export default function TwoColumnApplicationFormComponent() {
                                   }
                                 }}
                               />
-                              <label htmlFor={`ods-identificacao-${ods}`}>
+                              <Label
+                                htmlFor={`ods-identificacao-${ods}`}
+                                className="font-normal text-base"
+                              >
                                 {ods}
-                              </label>
+                              </Label>
                             </div>
                           ))}
                         </div>
@@ -1021,7 +1170,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Com qual/quais ODS seus projetos mais se encaixam?"
                     id="ODS Projetos"
-                    videoSrc="/path-to-ods-projetos-video.mp4"
+                    videoSrc="/videos/form1/projetosODS.mp4"
                   >
                     <Controller
                       name="ODS Projetos"
@@ -1048,9 +1197,12 @@ export default function TwoColumnApplicationFormComponent() {
                                   }
                                 }}
                               />
-                              <label htmlFor={`ods-projetos-${ods}`}>
+                              <Label
+                                htmlFor={`ods-projetos-${ods}`}
+                                className="font-normal text-base"
+                              >
                                 {ods}
-                              </label>
+                              </Label>
                             </div>
                           ))}
                         </div>
@@ -1070,7 +1222,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Motivação Para Participar"
                     id="Motivação Para Participar"
-                    videoSrc="/path-to-motivacao-participacao-video.mp4"
+                    videoSrc="/videos/form1/interesseNucleo.mp4"
                   >
                     <Controller
                       name="Motivação Para Participar"
@@ -1102,9 +1254,12 @@ export default function TwoColumnApplicationFormComponent() {
                                   }
                                 }}
                               />
-                              <label htmlFor={`motivacao-${option}`}>
+                              <Label
+                                htmlFor={`motivacao-${option}`}
+                                className="font-normal text-base"
+                              >
                                 {option}
-                              </label>
+                              </Label>
                             </div>
                           ))}
                         </div>
@@ -1120,7 +1275,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Outros motivos"
                     id="Motivação (Outro)"
-                    videoSrc="/path-to-motivacao-outro-video.mp4"
+                    videoSrc="/videos/form1/interesseNucleo.mp4"
                   >
                     <Controller
                       name="Motivação (Outro)"
@@ -1137,7 +1292,11 @@ export default function TwoColumnApplicationFormComponent() {
                   </AccessibleFormField>
                 </div>
 
-                <Button type="submit" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  aria-live="polite"
+                >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

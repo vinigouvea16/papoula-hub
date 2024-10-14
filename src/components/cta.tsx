@@ -4,7 +4,10 @@ import Link from 'next/link'
 
 export default function CTA() {
   return (
-    <div className="bg-black h-svh relative xl:pt-20 pt-16 mt-10" id="cta">
+    <div
+      className="bg-black h-[90vh] relative lg:py-4 mt-20 lg:mt-10 font-maxiRound"
+      id="cta"
+    >
       <div
         id="svg-div"
         className="absolute xl:top-[-10%] top-[-12%] right-4 h-[16.67%] w-auto flex items-center"
@@ -56,7 +59,11 @@ export default function CTA() {
           />
         </svg>
       </div>
-
+      <div>
+        <span className="uppercase lg:text-[5vw] text-4xl text-white flex justify-center pt-4 mb-4 lg:mb-10">
+          projetos
+        </span>
+      </div>
       <div className="bg-papoula-text h-2/3 text-center flex flex-col justify-center items-center xl:gap-14 gap-6">
         <h1 className="font-bold xl:text-6xl text-3xl">
           &ldquo;Histórias em Pesquisa&ldquo;

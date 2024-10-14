@@ -25,7 +25,7 @@ export default function Home() {
   }, [])
   return (
     // <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-white">
-    <div className="bg-black">
+    <div className="bg-black  font-maxiRound">
       <AnimatePresence mode="wait">
         {isLoading && <Preloader />}
       </AnimatePresence>
