@@ -80,7 +80,8 @@ export default function Section() {
       <div className="fixed top-[-10vh] left-0 h-[120vh] w-full">
         <motion.div style={{ y }} className="relative w-full h-full">
           <Image
-            src="/images/image1.jpg"
+            src="/images/filme_sala.jpg"
+            unoptimized={true}
             fill
             alt="image"
             className="brightness-75"

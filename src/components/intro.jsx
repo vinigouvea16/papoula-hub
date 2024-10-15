@@ -16,14 +16,15 @@ export default function Intro() {
     <div className="h-svh overflow-hidden">
       <motion.div style={{ y }} className="relative h-full">
         <Image
-          src="/images/image2.jpg"
+          src="/images/filme_quarto.jpg"
           fill
           alt="image"
+          unoptimized={true}
           style={{ objectFit: 'cover' }}
         />
         <a
           href="#cta"
-          className="text-5xl text-white absolute bottom-[10%] right-[2%] transform transition-transform duration-500 ease-out hover:scale-125 hover:-rotate-180"
+          className="text-5xl text-white absolute bottom-[10%] right-[5%] transform transition-transform duration-500 ease-out hover:scale-125 hover:-rotate-180"
         >
           <span className="sr-only">Call to action</span>
           <svg

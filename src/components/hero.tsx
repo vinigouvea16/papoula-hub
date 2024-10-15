@@ -16,10 +16,11 @@ export default function Hero() {
           alt="Picture of the author"
         />
         <Image
-          src="/images/heroimage1.jpg"
+          src="/images/projeto_nucleo2.jpg"
           width={560}
           height={620}
-          className="brightness-50  w-[180px] h-[354px]  md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[500px] xl:w-[560px] xl:h-[620px] object-cover"
+          unoptimized={true}
+          className="brightness-75  w-[180px] h-[354px]  md:w-[300px] md:h-[400px] lg:w-[400px] lg:h-[500px] xl:w-[560px] xl:h-[620px] object-cover"
           alt="Picture of the author"
         />
         <h2 className="uppercase text-5xl  font-maxiRound md:text-6xl lg:text-7xl xl:text-8xl font-bold absolute bottom-[20%] md:bottom-1/4 left-3">
@@ -35,11 +36,19 @@ export default function Hero() {
           <h2 className="text-5xl font-bold pb-5 font-maxiRound">
             Posicionamento
           </h2>
-          <p className="lg:text-2xl tracking-widest">
+          <p className="lg:text-2xl tracking-widest pb-10">
             Papoula nasce do desejo de conectar. Acreditamos no poder do
             coletivo e existimos para ocupar os espaços entre pessoas e ideias,
             transformando terrenos vazios em solo fértil para novas criações.
           </p>
+          {/* <Image
+            src="/images/projeto_selos1.png"
+            width={1928}
+            height={338}
+            unoptimized={true}
+            className="brightness-75"
+            alt="Picture of the author"
+          /> */}
         </div>
         {/* <div className="lg:text-start text-center xl:w-1/2">
           <h3 className="text-5xl font-bold pb-5 font-maxiRound">Missão</h3>

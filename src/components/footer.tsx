@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div className="text-papoula-text flex flex-col justify-center  gap-20">
+    <div className="text-papoula-text h-1/2 flex flex-col justify-end gap-20">
       <div
         id="footer-heading"
         className="flex flex-col items-center xl:items-stretch uppercase xl:font-thin text-papoula-text xl:text-8xl text-4xl md:text-6xl xl:flex-row xl:justify-evenly xl:gap-0 gap-10"

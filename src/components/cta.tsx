@@ -1,15 +1,13 @@
 import React from 'react'
 import { Button } from './ui/button'
 import Link from 'next/link'
+// import Image from 'next/image'
 
 export default function CTA() {
   return (
-    <div
-      className="bg-black h-[90vh] relative lg:py-4 mt-20 lg:mt-10 font-maxiRound"
-      id="cta"
-    >
+    <div className="text-papoula-text h-[90vh] relative lg:py-4 mt-20 lg:mt-10 font-maxiRound ">
       <div
-        id="svg-div"
+        id="cta"
         className="absolute xl:top-[-10%] top-[-12%] right-4 h-[16.67%] w-auto flex items-center"
       >
         <svg
@@ -21,7 +19,7 @@ export default function CTA() {
         >
           <path
             d="M55.021 14.879C63.2473 10.025 73.1623 8.96919 82.205 11.9843C85.1276 12.9587 88.1757 13.5179 91.2557 13.6451C100.77 14.0382 109.694 18.5785 115.645 26.0021C117.575 28.4092 119.848 30.5546 122.366 32.337C130.157 37.8524 135.219 46.519 136.238 56.0228C136.569 59.1047 137.33 62.1507 138.49 65.0227C142.075 73.9008 141.693 83.9332 137.43 92.5277C136.054 95.3033 135.063 98.2826 134.497 101.327C132.754 110.711 127.038 118.986 118.849 123.896C116.201 125.485 113.774 127.447 111.664 129.703C105.146 136.671 95.9122 140.515 86.3934 140.19C83.3106 140.084 80.227 140.412 77.2331 141.165C67.9892 143.488 58.1679 141.673 50.3632 136.231C47.836 134.469 45.0595 133.06 42.1428 132.065C33.1258 128.987 25.8364 122.097 22.2055 113.285C21.0275 110.426 19.4467 107.721 17.5306 105.296C11.5976 97.7868 9.16491 88.0541 10.85 78.6147C11.3952 75.5612 11.5145 72.4214 11.2055 69.3373C10.2525 59.8264 13.4251 50.2829 19.9139 43.2469C22.0109 40.9731 23.7947 38.3957 25.1883 35.6346C29.4861 27.1196 37.2829 20.7988 46.5088 18.4101C49.4955 17.6368 52.3622 16.4478 55.021 14.879Z"
-            fill="#D7DADB"
+            fill="#1EA8FF"
           />
           <ellipse
             cx="74.8765"
@@ -60,18 +58,18 @@ export default function CTA() {
         </svg>
       </div>
       <div>
-        <span className="uppercase lg:text-[5vw] text-4xl text-white flex justify-center pt-4 mb-4 lg:mb-10">
+        <span className="uppercase lg:text-[5vw] text-4xl text-papoula-text flex justify-center pt-4 mb-4 lg:mb-10">
           projetos
         </span>
       </div>
-      <div className="bg-papoula-text h-2/3 text-center flex flex-col justify-center items-center xl:gap-14 gap-6">
-        <h1 className="font-bold xl:text-6xl text-3xl">
+      <div className="md:bg-[url('/images/projeto_nucleo.jpg')] md:bg-cover bg-papoula-text h-2/3 text-center  flex flex-col justify-center items-center gap-6  ">
+        <h1 className="md:font-bold xl:text-6xl text-3xl backdrop-blur-md md:backdrop-blur-none text-black md:text-papoula-text ">
           &ldquo;Histórias em Pesquisa&ldquo;
         </h1>
-        <h2 className="font-semibold xl:text-2xl text-xl w-11/12">
+        <h2 className="md:font-semibold xl:text-2xl text-xl w-11/12 backdrop-blur-xl md:backdrop-blur-none tracking-wide md:tracking-normal  text-black md:text-papoula-text">
           Desenvolva Roteiros Baseados em Pesquisas da UNESPAR
         </h2>
-        <p className="xl:text-2xl xl:w-2/3 w-11/12">
+        <p className="xl:text-2xl xl:w-2/3 w-11/12 text-black backdrop-blur-md text-lg tracking-wide md:tracking-normal">
           Participe da primeira edição do Núcleo de Desenvolvimento de Roteiros
           da PAPOULA, em parceria com a UNESPAR, e ajude a transformar pesquisas
           acadêmicas em roteiros incríveis. Serão selecionados 4 autores para
@@ -82,7 +80,7 @@ export default function CTA() {
         <Link href="/application-form">
           <Button
             size="lg"
-            className="bg-papoula-blue text-black lg:text-xl lg:py-8 lg:px-10 hover:opacity-75 hover:text-papoula-text hover:bg-papoula-blue"
+            className="bg-papoula-blue text-black lg:text-xl lg:py-8 lg:px-10 hover:scale-110 hover:text-papoula-text hover:bg-papoula-blue"
           >
             Saiba Mais
           </Button>
