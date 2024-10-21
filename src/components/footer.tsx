@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div className="text-papoula-text flex flex-col justify-center  gap-20">
+    <div className="text-papoula-text flex flex-col justify-center gap-20 font-maxiRound">
       <div
         id="footer-heading"
         className="flex flex-col items-center xl:items-stretch uppercase xl:font-thin text-papoula-text xl:text-8xl text-4xl md:text-6xl xl:flex-row xl:justify-evenly xl:gap-0 gap-10"
@@ -13,7 +13,7 @@ export default function Footer() {
       </div>
       <div
         id="footer-footer"
-        className="flex flex-col xl:flex-row justify-between gap-16 items-center px-4"
+        className="flex flex-col xl:flex-row justify-between gap-16 items-center px-10"
       >
         <div
           id="contact-info"
@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
         <div
           id="made-by"
-          className="font-extralight flex flex-row text-center items-end gap-1"
+          className="font-extralight flex flex-row text-center items-end gap-1 font-raleway"
         >
           <span>made by</span>
           <span className="italic text-xl">

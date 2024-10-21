@@ -2,7 +2,7 @@ import TwoColumnApplicationForm from '@/components/two-column-application-form'
 
 export default function ApplicationFormPage() {
   return (
-    <div className="bg-papoula-text h-lvh">
+    <div className="bg-papoula-text h-lvh font-raleway">
       <TwoColumnApplicationForm />
     </div>
   )

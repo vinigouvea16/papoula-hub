@@ -4,7 +4,10 @@ import Link from 'next/link'
 
 export default function CTA() {
   return (
-    <div className="bg-black h-svh relative xl:pt-20 pt-16 mt-10" id="cta">
+    <div
+      className="bg-black h-svh relative xl:pt-20 pt-16 mt-10 font-raleway"
+      id="cta"
+    >
       <div
         id="svg-div"
         className="absolute xl:top-[-10%] top-[-12%] right-4 h-[16.67%] w-auto flex items-center"

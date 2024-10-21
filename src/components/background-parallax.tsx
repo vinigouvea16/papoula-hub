@@ -18,7 +18,7 @@ export default function BackgroundParallax() {
   }, [])
 
   return (
-    <main className="bg-black">
+    <main className="bg-black font-maxiRound">
       <Intro />
       <Description />
       <Section />

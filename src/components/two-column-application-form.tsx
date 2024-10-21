@@ -541,7 +541,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Email"
                     id="Email"
-                    videoSrc="/path-to-email-video.mp4"
+                    videoSrc="/videos/form1/email.mp4"
                   >
                     <Controller
                       name="Email"
@@ -561,7 +561,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Nome Social"
                     id="Nome Social"
-                    videoSrc="/path-to-nome-social-video.mp4"
+                    videoSrc="/videos/form1/nomeSocial.mp4"
                   >
                     <Controller
                       name="Nome Social"
@@ -580,7 +580,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Tipo de Roteirista"
                     id="Tipo de Roteirista"
-                    videoSrc="/path-to-tipo-roteirista-video.mp4"
+                    videoSrc="/videos/form1/roteirista.mp4"
                   >
                     <Controller
                       name="Tipo de Roteirista"
@@ -614,7 +614,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Ano de Nascimento"
                     id="Ano de Nascimento"
-                    videoSrc="/path-to-ano-nascimento-video.mp4"
+                    videoSrc="/videos/form1/idade.mp4"
                   >
                     <Controller
                       name="Ano de Nascimento"
@@ -640,7 +640,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Raça/Etnia"
                     id="Raça/Etnia"
-                    videoSrc="/path-to-raca-etnia-video.mp4"
+                    videoSrc="/videos/form1/raca.mp4"
                   >
                     <Controller
                       name="Raça/Etnia"
@@ -675,7 +675,7 @@ export default function TwoColumnApplicationFormComponent() {
                     <AccessibleFormField
                       label="Especifique Raça/Etnia"
                       id="Raça/Etnia (Especifique)"
-                      videoSrc="/path-to-raca-etnia-outro-video.mp4"
+                      videoSrc="/videos/form1/raca.mp4"
                     >
                       <Controller
                         name="Raça/Etnia (Especifique)"
@@ -695,7 +695,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Gênero e Orientação Sexual"
                     id="Gênero e Orientação Sexual"
-                    videoSrc="/path-to-genero-orientacao-video.mp4"
+                    videoSrc="/videos/form1/genero.mp4"
                   >
                     <Controller
                       name="Gênero e Orientação Sexual"
@@ -752,7 +752,7 @@ export default function TwoColumnApplicationFormComponent() {
                     <AccessibleFormField
                       label="Especifique Gênero e Orientação Sexual"
                       id="Gênero e Orientação Sexual (Especifique)"
-                      videoSrc="/path-to-genero-orientacao-outro-video.mp4"
+                      videoSrc="/videos/form1/genero.mp4"
                     >
                       <Controller
                         name="Gênero e Orientação Sexual (Especifique)"
@@ -775,7 +775,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Pessoa com Deficiência (PCD)"
                     id="PCD"
-                    videoSrc="/path-to-pcd-video.mp4"
+                    videoSrc="/videos/form1/pcd.mp4"
                   >
                     <Controller
                       name="PCD"
@@ -804,7 +804,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Recursos de Acessibilidade"
                     id="Recursos A11y"
-                    videoSrc="/path-to-recursos-a11y-video.mp4"
+                    videoSrc="/videos/form1/recursoa11y.mp4"
                   >
                     <Controller
                       name="Recursos A11y"
@@ -826,7 +826,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Região"
                     id="Região"
-                    videoSrc="/path-to-regiao-video.mp4"
+                    videoSrc="/videos/form1/regiao.mp4"
                   >
                     <Controller
                       name="Região"
@@ -878,7 +878,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Nível de Experiência"
                     id="Nível de Experiência"
-                    videoSrc="/path-to-nivel-experiencia-video.mp4"
+                    videoSrc="/videos/form1/audiovisual.mp4"
                   >
                     <Controller
                       name="Nível de Experiência"
@@ -924,7 +924,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Formação"
                     id="Formação"
-                    videoSrc="/path-to-formacao-video.mp4"
+                    videoSrc="/videos/form1/formacao.mp4"
                   >
                     <Controller
                       name="Formação"
@@ -976,7 +976,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Com qual/quais ODS você mais se identifica?"
                     id="ODS Identificação"
-                    videoSrc="/path-to-ods-identificacao-video.mp4"
+                    videoSrc="/videos/form1/interesseODS.mp4"
                   >
                     <Controller
                       name="ODS Identificação"
@@ -1021,7 +1021,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Com qual/quais ODS seus projetos mais se encaixam?"
                     id="ODS Projetos"
-                    videoSrc="/path-to-ods-projetos-video.mp4"
+                    videoSrc="/videos/form1/projetosODS.mp4"
                   >
                     <Controller
                       name="ODS Projetos"
@@ -1070,7 +1070,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Motivação Para Participar"
                     id="Motivação Para Participar"
-                    videoSrc="/path-to-motivacao-participacao-video.mp4"
+                    videoSrc="/videos/form1/interesseNucleo.mp4"
                   >
                     <Controller
                       name="Motivação Para Participar"
@@ -1120,7 +1120,7 @@ export default function TwoColumnApplicationFormComponent() {
                   <AccessibleFormField
                     label="Outros motivos"
                     id="Motivação (Outro)"
-                    videoSrc="/path-to-motivacao-outro-video.mp4"
+                    videoSrc="/videos/form1/interesseNucleo.mp4"
                   >
                     <Controller
                       name="Motivação (Outro)"
@@ -1137,7 +1137,7 @@ export default function TwoColumnApplicationFormComponent() {
                   </AccessibleFormField>
                 </div>
 
-                <Button type="submit" disabled={isSubmitting}>
+                <Button type="submit" disabled>
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />

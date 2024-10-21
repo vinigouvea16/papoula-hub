@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Hero() {
   return (
-    <div className="h-full bg-black 2xl:px-32 lg:px-10 px-2 pb-14 pt-44 text-papoula-text flex-col">
+    <div className="h-full bg-black 2xl:px-32 lg:px-10 px-2 pb-14 pt-44 text-papoula-text flex-col font-raleway">
       <div className="relative lg:gap-8 gap-2 flex justify-end" id="about-hero">
         <Image
           src="/images/heroimage2.jpg"
@@ -232,7 +232,7 @@ export default function Hero() {
             z-10 
             mx-auto"
           >
-            <div className="flex justify-center align-middle my-4 ml-4 md:ml-8">
+            <div className="flex justify-center align-middle my-4 ml-4 md:ml-8 font-maxiRound">
               <ul
                 className="
                   list-disc 
@@ -256,7 +256,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="flex justify-center pt-24 pb-14">
-        <p className="font-bold lg:text-[3vw] text-3xl text-center flex flex-col lg:flex-row gap-4">
+        <p className="font-bold lg:text-[3vw] text-3xl text-center flex flex-col lg:flex-row gap-4 font-maxiRound ">
           <span>ENTRETENIMENTO</span>
           <span>+</span>
           <span>CONTEÚDO EMBASADO</span>
